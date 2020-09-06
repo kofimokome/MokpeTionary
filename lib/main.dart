@@ -51,6 +51,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  AppBar _searchBar;
+  AppBar _defaultBar;
+  AppBar _appBar;
+  bool _showSearchBar = false;
+
+  // _appBar = _normal;
 
   void _incrementCounter() {
     setState(() {
@@ -65,20 +71,52 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        leading: Icon(Icons.arrow_back),
-        title: Text(widget.title),
-        actions: [IconButton(icon: Icon(Icons.search), onPressed: null, color: Colors.red, iconSize: 40,),],
+    _defaultBar = AppBar(
+      title: Text(
+        'MOKPETIONARY',
+        style: TextStyle(
+            color: Color(0xff16609F),
+            fontWeight: FontWeight.bold,
+            fontSize: 20),
       ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            setState(() {
+              _showSearchBar = true;
+            });
+          },
+          color: Color(0xff16609F),
+          iconSize: 40,
+        ),
+      ],
+      backgroundColor: Colors.white,
+    );
+
+    _searchBar = AppBar(
+      title: Text(
+        'Enter Search Text ...',
+        style: TextStyle(color: Colors.blue),
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.close),
+          onPressed: () {
+            setState(() {
+              _showSearchBar = false;
+            });
+          },
+          color: Color(0xff16609F),
+          iconSize: 40,
+        ),
+      ],
+      backgroundColor: Colors.white,
+    );
+    _appBar = _showSearchBar ? _searchBar : _defaultBar;
+
+    return Scaffold(
+      appBar: _appBar,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
